@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Leopard Changing Spots offers top-tier software in exchange for donations. Get innovative tools and support a great cause.">
+    <meta name="keywords" content="software, portal view, best tools, display software, South Africa, Leopard Changing Spots">
+    <meta name="author" content="Craig Durrheim">
+    <meta name="robots" content="index, follow"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Portal View Experiments: A quest for a new version of Portal View</title>
+</head>
+<body>
+
+  <body>
+  <nav>
+        <a class="brand" href="../index.html">LEOPARD CHANGING SPOTS<span>.</span></a>
+
+        <ul class="nav-bar">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../about.html">About</a></li>
+            <li><a href="../software.html">Software</a></li>
+            <li><a href="../blog.html">Blog</a></li>
+        </ul>
+    </nav>
+
+    <h1>Portal View Experiments: A quest for a new version of Portal View | 07 November 2026</h1>
+
+      <p>There is something quite interesting about building software. Sometimes you spend hours, days or even months developing an idea, only to discover that the solution isn't quite what you thought it would be. Sometimes an experiment fails, sometimes it produces unexpected results, and occasionally it gives you a completely new direction to investigate.</p>
+
+      <p>Tonight was one of those nights for Portal View.</p>
+
+      <p>Portal View is our first commercial product under Leopard Changing Spots. The original idea was relatively straightforward: take an ordinary video image and enhance the perception of depth, making the picture appear more dimensional and allowing details to stand out more prominently.</p>
+
+      <p>We've spent a considerable amount of time developing our rendering engine, experimenting with contrast, local detail, edge separation, colour and different depth cues. The objective has always been to produce something impressive without requiring expensive hardware or dedicated graphics cards.</p>
+
+      <p>But I don't want Portal View to become a product where we simply keep increasing sharpening, contrast and colour saturation. I want to understand how we can actually improve the perception of depth.</p>
+
+      <p>That question led us down a rather interesting research path.</p>
+
+      <h2>Going back to the beginnings of stereoscopic vision</h2>
+
+      <p>One of the things we investigated was the early research into stereoscopic vision.</p>
+
+      <p>Back in 1838, Charles Wheatstone demonstrated that presenting different perspectives of the same scene to the two eyes could produce a convincing perception of three-dimensional depth. This was one of the foundations of stereoscopic technology.</p>
+
+      <p>The principle is fascinating. Our eyes are separated by a small distance, meaning each eye sees the world from a slightly different position. The brain uses the differences between those images to calculate depth.</p>
+
+      <p>I started thinking about how we could reproduce something similar in Portal View.</p>
+
+      <p>We have an ordinary television, a video source and our rendering engine. What if we could calculate two slightly different perspectives of the same video and alternate between them extremely rapidly?</p>
+
+      <p>Perhaps we could reproduce some of the depth perception associated with switching between the two eyes.</p>
+
+      <p>That became our next experiment.</p>
+
+      <h2>Experiment 1: Alternating-Eye Parallax</h2>
+
+      <p>We called the experiment AEP, or Alternating-Eye Parallax.</p>
+
+      <p>The idea was to capture a video frame, estimate the depth of different regions, generate two slightly different versions of the image and alternate between them.</p>
+
+      <p>We started with a relatively simple approach.</p>
+
+      <p>The foreground would receive a greater horizontal displacement, while the background would receive a smaller displacement. The two resulting images would then alternate on the television.</p>
+
+      <p>Initially, this was interesting. We could produce two different images, and the effect was visible.</p>
+
+      <p>However, something wasn't quite right.</p>
+
+      <p>Instead of producing the perception of a three-dimensional scene, the image appeared to move from side to side.</p>
+
+      <p>We tried increasing the displacement between the two perspectives. This made the movement more noticeable, but it didn't produce the depth effect we were looking for.</p>
+
+      <p>The problem became particularly obvious when testing a still photograph. Instead of seeing objects separated in depth, the entire picture appeared to vibrate.</p>
+
+      <p>This was an important result because it helped us understand a fundamental problem with our approach.</p>
+
+      <p>When you close one eye and open the other, each eye receives its own perspective. When we alternate images on an ordinary television, however, both eyes receive both images in succession.</p>
+
+      <p>We weren't reproducing genuine binocular stereoscopic viewing. We were producing an alternating visual movement.</p>
+
+      <p>That distinction changed how we approached the problem.</p>
+
+      <h2>Experiment 2: Reconstructing virtual camera perspectives</h2>
+
+      <p>Rather than simply moving pixels horizontally, we investigated whether we could reproduce two virtual cameras looking at the same scene from slightly different positions.</p>
+
+      <p>This involved more complicated mathematics.</p>
+
+      <p>We experimented with camera separation, perspective projection, convergence planes and depth-dependent displacement.</p>
+
+      <p>The objective was to generate two images that behaved more like photographs taken from different camera positions.</p>
+
+      <p>We also introduced a depth buffer, which attempts to determine which surfaces should appear in front when projected pixels overlap.</p>
+
+      <p>This was an improvement in our approach to image reconstruction, but we encountered another problem.</p>
+
+      <p>When the virtual camera moves, certain parts of the background that were previously hidden can become visible. A normal two-dimensional image doesn't contain the information required to reconstruct all those missing areas.</p>
+
+      <p>Our initial attempts at filling those gaps produced unwanted lines and visual artefacts, especially when testing moving video.</p>
+
+      <p>We also had to consider the timing of video frames. If the left perspective comes from one moment in a movie and the right perspective comes from the next moment, the images no longer represent the same scene.</p>
+
+      <p>We therefore investigated generating both perspectives from the same captured frame and keeping them together for presentation.</p>
+
+      <p>This was a useful architectural improvement, but it didn't solve the underlying problem of delivering independent images to each eye.</p>
+
+      <p>Again, the experiment taught us something important.</p>
+
+      <p>Generating two perspectives is only half the problem. We also need a way to deliver the correct perspective to each eye.</p>
+
+      <h2>Experiment 3: Investigating glasses-free stereoscopic displays</h2>
+
+      <p>This brought us to the research into autostereoscopic displays.</p>
+
+      <p>Technologies such as lenticular lenses and parallax barriers can direct different images towards different viewing positions.</p>
+
+      <p>In a simplified two-view display, the left eye receives one perspective and the right eye receives another. No glasses are required.</p>
+
+      <p>This is interesting because it addresses the exact limitation we encountered with our ordinary television.</p>
+
+      <p>A software application alone cannot make an unmodified conventional television direct independent images towards each eye. Some form of optical separation is needed.</p>
+
+      <p>We investigated whether Portal View could generate the two perspectives and interleave their pixels, allowing a specially designed optical layer to direct the images appropriately.</p>
+
+      <p>This is a promising research direction, although it introduces hardware requirements, alignment challenges and compromises involving resolution and brightness.</p>
+
+      <p>I don't want to pretend we've solved this problem. We haven't.</p>
+
+      <p>But understanding why something doesn't work is just as important as knowing how to make it work.</p>
+
+      <h2>Experiment 4: Can we reproduce holographic technology?</h2>
+
+      <p>We also explored other display technologies.</p>
+
+      <p>One particularly interesting example was the LED hologram fan.</p>
+
+      <p>These devices use rapidly rotating LED strips to create images in space through persistence of vision.</p>
+
+      <p>I wondered whether we could reproduce some of that effect using the pixels on an ordinary television.</p>
+
+      <p>The answer is that we can simulate aspects of the visual appearance in software, but the television's pixels remain physically fixed on a flat surface. It cannot reproduce the actual swept-volume effect of a rotating LED display.</p>
+
+      <p>We also investigated genuine holographic displays, spatial light modulators and computer-generated holography.</p>
+
+      <p>These technologies reconstruct light in fundamentally different ways from conventional televisions.</p>
+
+      <p>They are considerably more complex, but they demonstrate how much further display technology can go.</p>
+
+      <p>This is something I would like Leopard Changing Spots to explore over the longer term.</p>
+
+      <h2>A different approach: Understanding the depth of the actual scene</h2>
+
+      <p>After all these experiments, I started reconsidering what we are really trying to achieve with Portal View.</p>
+
+      <p>The current Microsoft Store product is strongest when we enhance the existing visual clues that make an image appear three-dimensional.</p>
+
+      <p>These include:</p>
+      <ul>
+        <li>Local contrast.</li>
+        <li>Fine texture.</li>
+        <li>Surface detail.</li>
+        <li>Shading and lighting transitions.</li>
+        <li>Foreground and background separation.</li>
+        <li>Edge definition.</li>
+        <li>Colour and luminance relationships.</li>
+      </ul>
+
+      <p>Our existing V21 rendering engine uses a custom depth-cue map to help guide some of these effects.</p>
+
+      <p>However, there is a limitation.</p>
+
+      <p>The engine estimates depth using characteristics such as texture, edges, colour and local contrast. These are useful visual clues, but they don't necessarily tell us how far away an object actually is.</p>
+
+      <p>For example, a detailed mountain in the distance could receive a higher depth score than a person's face in the foreground.</p>
+
+      <p>The algorithm doesn't understand that it is looking at a mountain or a person.</p>
+
+      <p>I think this is where our next major opportunity lies.</p>
+
+      <p>Instead of simply improving the visual characteristics of an image, what if Portal View could understand the approximate spatial structure of the scene?</p>
+
+      <p>We have started investigating AI-based monocular depth estimation.</p>
+
+      <p>Technologies such as Depth Anything V2 provide an interesting starting point. They attempt to estimate the relative depth of different regions within an ordinary two-dimensional photograph.</p>
+
+      <p>Imagine Portal View being able to identify the approximate depth relationship between a person, the building behind them, the trees further back and the mountains in the distance.</p>
+
+      <p>We could then use that information to make much more intelligent rendering decisions.</p>
+
+      <p>This is the direction I want to investigate for our next development cycle.</p>
+
+      <h2>What comes next for Portal View?</h2>
+
+      <p>I don't want to abandon the existing product or split our development into completely separate versions that force existing customers to buy another application.</p>
+
+      <p>My philosophy has always been that improvements should reach the people who have already supported us.</p>
+
+      <p>We have a working foundation, and I want to build on it.</p>
+
+      <p>For the next release, I am particularly interested in investigating three areas.</p>
+
+      <h3>1. More intelligent depth estimation</h3>
+      <p>Move beyond our current heuristic depth map and investigate learned depth estimation. The objective is to understand the spatial relationships within an image more accurately.</p>
+
+      <h3>2. Temporal depth consistency</h3>
+      <p>Video is constantly changing. We need the estimated depth of objects to remain stable as they move, rather than fluctuating between frames. This could be an important improvement to the overall experience.</p>
+
+      <h3>3. More sophisticated depth-aware rendering</h3>
+      <p>Once we have a better understanding of the scene, we can investigate how to strengthen natural depth cues without introducing artificial halos, glowing outlines or unwanted visual artefacts.</p>
+
+      <p>Performance remains equally important. Portal View was developed with modest Windows computers in mind, and I don't want our improvements to make the application unusable for people without dedicated graphics hardware.</p>
+
+      <p>Advanced processing will need to be optional and carefully benchmarked.</p>
+
+      <h2>Why failed experiments matter</h2>
+
+      <p>There is a tendency in software development to focus on the finished product.</p>
+
+      <p>We see the final application, its features and its marketing. We don't always see the experiments that happened along the way.</p>
+
+      <p>But research is rarely a straight line.</p>
+
+      <p>Our alternating-perspective experiment didn't produce the stereoscopic effect we wanted. Increasing the camera separation produced more noticeable movement rather than convincing depth. Our virtual camera reconstruction introduced new problems with missing background information.</p>
+
+      <p>We also learned that a conventional television cannot provide genuine independent left-eye and right-eye images through software alone.</p>
+
+      <p>These weren't wasted experiments.</p>
+
+      <p>They helped us understand the distinction between making an image move, making an image look three-dimensional and actually delivering stereoscopic perspectives.</p>
+
+      <p>That knowledge will influence how we approach the next generation of Portal View.</p>
+
+      <h2>The bigger ambition</h2>
+
+      <p>Leopard Changing Spots was established around a simple idea: Explore. Experiment. Build.</p>
+
+      <p>I don't want us to simply follow what other software companies are doing. I want us to investigate problems, experiment with new approaches and see where we can develop something useful.</p>
+
+      <p>Portal View is our first commercial product, but I see considerable opportunity in display technology, visual computing and digital media.</p>
+
+      <p>Eventually, I would love to explore technologies that go much further than enhancing an ordinary television image.</p>
+
+      <p>For now, though, our priority is making Portal View genuinely impressive.</p>
+
+      <p>We don't need to rush a new release just to have another version number. I would rather spend time understanding the technology and produce an improvement that people can actually see.</p>
+
+      <p>Tonight's experiments didn't give us the breakthrough we were hoping for.</p>
+
+      <p>But they gave us something equally valuable: a much clearer understanding of the problem we are trying to solve.</p>
+      
+      <P>We will not give up until we give our consumers the best viewing experience.</P>
+
+    </body>
+</html>
