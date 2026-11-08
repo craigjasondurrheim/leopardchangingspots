@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-T0R1049GWY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-T0R1049GWY');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>How Portal View Creates Visual Depth on a Flat 2D Screen | Leopard Changing Spots</title>
+    <meta name="description" content="Discover how Portal View uses real-time monocular depth cues, form illumination, and scale-aware rendering to bring immersive 3D-like depth to 2D videos on a secondary Windows display.">
+    <meta name="keywords" content="Portal View, visual depth 2D screen, dual monitor video enhancer Windows, real-time visual computing, secondary display software, improve video depth PC, Windows 11 display enhancer, Leopard Changing Spots">
+    <meta name="author" content="Craig Durrheim">
+    <meta name="robots" content="index, follow">
+    <!-- Stylesheets & Fonts -->
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav>
+        <a class="brand" href="../index.html">LEOPARD CHANGING SPOTS<span>.</span></a>
+
+        <ul class="nav-bar">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../about.html">About</a></li>
+            <li><a href="../software.html">Software</a></li>
+            <li><a href="../blog.html">Blog</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>How Portal View Creates Visual Depth on a Flat 2D Screen | 08 November 2026</h1>
+
+        <p>Standard computer monitors and TVs are completely flat, yet our brains are wired to see the world in three dimensions. When you watch a video on a standard display, everything—from a mountain range in the background to a person standing in the foreground—is compressed onto a single flat plane of pixels.</p>
+
+        <p>When building <strong>Portal View</strong>, our goal was to take standard video playing on a Windows PC and give it a striking sense of depth, dimension, and presence on a secondary display—without requiring special glasses, heavy AI hardware, or pre-rendered 3D video files.</p>
+
+        <p>Here is a look under the hood at how Portal View’s <strong>Luminous Film Engine</strong> works, why we skipped heavy neural networks, and how perceptual visual cues trick your eye into seeing through the screen.</p>
+
+        <h2>Why Flat Videos Look Flat</h2>
+
+        <p>In the real world, your eyes rely on dozens of subtle visual clues to judge distance and shape. Photographers and painters call these <em>monocular depth cues</em>. They include:</p>
+
+        <ul>
+            <li><strong>Micro-texture and sharpness.</strong> Objects closer to you show crisp surface grain, while distant backgrounds appear softer.</li>
+            <li><strong>Light and shadow gradients.</strong> Curved surfaces wrap light gradually across their forms, giving objects volume rather than making them look like flat cardboard cutouts.</li>
+            <li><strong>Color richness.</strong> Atmospheric haze washes out distant colors, while foreground subjects carry richer saturation and contrast.</li>
+            <li><strong>Edge separation.</strong> Clear boundaries separate a subject from whatever sits behind it.</li>
+        </ul>
+
+        <p>Standard video compression and basic monitor settings often flatten these subtle transitions. Simply cranking up your monitor’s contrast or saturation slider won't fix it—in fact, global filters usually crush dark shadows and blow out bright highlights, making the image look worse.</p>
+
+        <h2>Building a Custom Relative-Depth Cue Map in Real Time</h2>
+
+        <p>Many modern visual tools rely on massive neural networks to guess the 3D geometry of a scene. While AI models can be impressive, they are heavy on system resources, introduce noticeable lag during fast video playback, and often require large model downloads.</p>
+
+        <p>Instead, Portal View uses a lightweight, real-time heuristic approach built directly on top of DirectX screen capture in C#. Rather than trying to guess exact physical distances, our engine builds a <strong>custom relative-depth cue map</strong> directly from every incoming video frame at 60 frames per second.</p>
+
+        <p>It evaluates four visual signals simultaneously:</p>
+
+        <ol>
+            <li><strong>Fine texture and detail (34%).</strong> Areas rich in micro-detail are weighted as visually prominent.</li>
+            <li><strong>Local edge structure (31%).</strong> Strong structural boundaries help distinguish separate visual planes.</li>
+            <li><strong>Chroma and color prominence (20%).</strong> Richer color signals help separate active subjects from muted backdrops.</li>
+            <li><strong>Mid-to-broad tonal form (15%).</strong> Broad lighting transitions indicate three-dimensional curvature.</li>
+        </ol>
+
+        <p>By blending these four cues and smoothing them along real luminance boundaries, Portal View creates a live prominence map that guides where detail and separation should be emphasized—without bleeding halos across object edges.</p>
+
+        <h2>Form Illumination: Sculpting Light Without the Glow</h2>
+
+        <p>One of the biggest traps in visual enhancement software is "bloom"—that soft, artificial glow you see around bright edges when a filter tries too hard to sharpen an image.</p>
+
+        <p>To avoid that artificial look, Portal View separates <strong>edge crispness</strong> from <strong>internal form illumination</strong>:</p>
+
+        <ul>
+            <li><strong>Tightly clamped edge transitions.</strong> Our edge engine steepens real luminance transitions along high-prominence boundaries while strictly limiting overshoot to just a few luma levels. You get razor-sharp separation without bright white outlines around objects.</li>
+            <li><strong>Surface relief inside objects.</strong> Inspired by classical painting techniques, Form Illumination gently strengthens broad existing highlights and deepens internal shadow transitions. Crucially, the engine suppresses this effect right at detected depth boundaries—meaning it sculpts the volume <em>inside</em> an object rather than painting a border around it.</li>
+            <li><strong>Gamut-safe adaptive vibrance.</strong> Instead of boosting all colors equally, Portal View lifts muted tones while protecting already saturated colors and bright highlights so subtle textures never clip into flat blobs of color.</li>
+        </ul>
+
+        <h2>Adapting Automatically to Any Video Window</h2>
+
+        <p>Watching a small windowed video in a browser is very different from watching a movie in fullscreen on a large secondary TV. If a visual engine uses a fixed pixel grid, fine textures get over-processed in small windows or completely missed on large screens.</p>
+
+        <p>Portal View solves this with <strong>scale-aware viewport detection</strong>. The engine tracks screen activity and image structure to estimate the active video region, dynamically scaling its analysis grid so a compact browser player and a fullscreen monitor receive the exact same balanced visual treatment.</p>
+
+        <h2>Experience Your Second Screen as a Window of Depth</h2>
+
+        <p>Portal View is designed specifically for Windows PCs with a secondary display—whether you use a second monitor at your desk or send video out to a living room TV.</p>
+</main>
+</body>
+</html>
